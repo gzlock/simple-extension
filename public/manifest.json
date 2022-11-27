@@ -1,0 +1,53 @@
+{
+  "name": "Simple Extension",
+  "description": "Just a simple extension",
+  "version": "0.9.0",
+  "manifest_version": 3,
+  "minimum_chrome_version": "99",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "incognito": "split",
+  "icons": {
+    "16": "img/icon_16.png",
+    "48": "img/icon_48.png",
+    "128": "img/icon_128.png"
+  },
+  "background": {
+    "type": "module",
+    "service_worker": "src/background/index.js"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "options_page": "src/options/options.html",
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "activeTab",
+    "cookies",
+    "webNavigation",
+    "webRequest",
+    "storage",
+    "bookmarks",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": []
+  },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "getTab.js"
+      ]
+    }
+  ]
+}

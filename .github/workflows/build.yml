@@ -1,0 +1,29 @@
+name: crx builder
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: yarn
+      - run: npm run build
+      - name: Zip build files
+        run: 7z a ./simple-extension.zip ./dist/*
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body_path: ./CHANGELOG.txt
+          files: |
+            ./simple-extension.crx

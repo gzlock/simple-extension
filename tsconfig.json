@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "allowJs": true,
+    "lib": [
+      "ESNext",
+      "DOM",
+      "WebWorker"
+    ],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": [
+      "node",
+      "chrome"
+    ],
+    "target": "esnext",
+    "module": "commonjs",
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "typings/*.d.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
