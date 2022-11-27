@@ -2,10 +2,11 @@ import randomString from '../utils/randomString'
 import sleep from '../utils/sleep'
 import { getCurrentTab } from '../utils/getTab'
 import { loadData, saveData } from '../utils/data'
-import { Cookies, Domain, getCookies } from '../utils/domain'
+import { Domain } from '../utils/domain'
 import { forEach, isEmpty } from 'lodash-es'
 import { Rules } from './rules'
 import { UA } from '../utils/ua'
+import { getCookies } from '../utils/cookies'
 
 export class ContextMenu {
   private readonly rules: Rules
@@ -65,8 +66,8 @@ export class ContextMenu {
     const domain = this.settings.domains[url.hostname] ||
       new Domain()
     this.settings.domains[url.hostname] = domain
-    domain.selected = name
-    domain.cookies[name] = new Cookies(name!, cookies)
+    domain.cookies.selected = name
+    domain.cookies.cookies[name] = cookies
     await saveData(this.settings)
     await this.updateMenu()
   }
@@ -97,14 +98,14 @@ export class ContextMenu {
     if (domain) {
       const switcher: Menu = { title: '切换', children: [] }
       children.push(switcher)
-      forEach(domain.cookies, (cookie: Cookies) => {
-        const isSelected = domain.selected == cookie.name
+      forEach(domain.cookies.cookies, (cookie: Cookies, name: string) => {
+        const isSelected = domain.cookies.selected == name
         switcher.children!.push({
-          title: cookie.name,
+          title: name,
           type: 'checkbox',
           checked: isSelected,
           click: async (info, tab) => {
-            await domain.useCookie(cookie)
+            await domain.useCookie(name, cookie)
             await saveData(this.settings)
             await chrome.tabs.reload(tab?.id!)
           },

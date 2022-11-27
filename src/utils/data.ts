@@ -4,7 +4,7 @@ import { forEach } from 'lodash-es'
 export async function loadData (): Promise<Settings> {
 
   // @ts-ignore
-  const data: Settings = await chrome.storage.sync.get()
+  const data: Settings = await chrome.storage.local.get()
 
   const domains: Domains = {}
   if (data) {
@@ -34,9 +34,9 @@ export async function saveData ({
     domains: _domains,
   }
   console.log('data.ts', 'saveData', data)
-  await chrome.storage.sync.set(data)
+  await chrome.storage.local.set(data)
 }
 
 export function clearData () {
-  return chrome.storage.sync.clear()
+  return chrome.storage.local.clear()
 }

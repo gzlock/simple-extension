@@ -8,7 +8,7 @@
       <div v-if="hadUA" style="color: #409EFF">
         {{ domains[domain].ua?.value }}
       </div>
-      <div v-else>无</div>
+      <div v-else>默认</div>
     </el-alert>
     <el-divider/>
     <h3>Cookies内容</h3>
@@ -24,7 +24,7 @@
             {{ isSelected(name) ? '已在使用中' : '使用' }}
           </el-button>
         </el-alert>
-        <el-table :data="domains[domain].cookies[name].value" border>
+        <el-table :data="domains[domain].cookies[name]" border>
           <el-table-column label="名称" prop="name"/>
           <el-table-column label="值" prop="value"/>
         </el-table>
@@ -51,20 +51,20 @@ export default {
       const name = this.names[index]
       if (!confirm(`删除【${name}】?`)) return
       const domain: Domain = this.domains[this.domain]
-      delete domain.cookies[name]
-      if (domain.selected == name)
-        delete domain.selected
+      delete domain.cookies.cookies[name]
+      if (domain.cookies.selected == name)
+        domain.cookies.selected = undefined
       await this.save()
       this.tab = 0
       chrome.runtime.sendMessage('update')
     },
     async useCookie (name: string) {
-      this.domains[this.domain].useCookie(this.domains[this.domain].cookies[name])
+      this.domains[this.domain].useCookie(name, this.domains[this.domain].cookies.cookies[name])
       await this.save()
       chrome.runtime.sendMessage('update')
     },
     isSelected (name: string): boolean {
-      return this.domains[this.domain].selected == name
+      return this.domains[this.domain].cookies.selected == name
     },
     async clearUA () {
       delete this.domains[this.domain].ua
@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     ...mapState(['domains']),
-    names (): string[] {return Object.keys(this.domains[this.domain].cookies)},
+    names (): string[] {return Object.keys(this.domains[this.domain].cookies.cookies)},
     hadUA (): boolean {
       return this.domains[this.domain].ua && this.domains[this.domain].ua.value
     },

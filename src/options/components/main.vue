@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <el-tabs type="border-card" v-model="tab">
-      <el-tab-pane label="管理域名" name="cookie" :lazy="true">
+      <el-tab-pane label="管理域名" name="cookie" :lazy="true" class="pane">
         <domains/>
       </el-tab-pane>
-      <el-tab-pane label="管理自定义UA" name="ua" :lazy="true">
+      <el-tab-pane label="管理自定义UA" name="ua" :lazy="true" class="pane">
         <ua/>
       </el-tab-pane>
-      <el-tab-pane label="数据管理" name="data" :lazy="true">
+      <el-tab-pane label="数据" name="data" :lazy="true" class="pane">
         <data-editor/>
       </el-tab-pane>
-      <el-tab-pane label="关于" name="about" :lazy="true">
+      <el-tab-pane label="关于" name="about" :lazy="true" class="pane">
         <about/>
       </el-tab-pane>
     </el-tabs>
@@ -40,7 +40,7 @@ export default {
     // })
   },
   watch: {
-    tab (val) {
+    tab (val: any) {
       window.location.hash = val
     },
   },
@@ -62,5 +62,9 @@ export default {
 <style scoped>
 .container {
   width: 800px;
+}
+.pane{
+  max-height: 800px;
+  overflow: auto;
 }
 </style>

@@ -59,7 +59,7 @@ export default defineConfig({
         background: resolve(__dirname, 'src/background/main.ts'),
         content: resolve(__dirname, 'src/content/content.html'),
         options: resolve(__dirname, 'src/options/options.html'),
-        popup: resolve(__dirname, 'src/popup/popup.html'),
+        // popup: resolve(__dirname, 'src/popup/popup.html'),
       },
     },
 

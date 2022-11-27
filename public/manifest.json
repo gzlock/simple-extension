@@ -17,10 +17,8 @@
     "type": "module",
     "service_worker": "src/background/index.js"
   },
-  "action": {
-    "default_popup": "src/popup/popup.html"
-  },
   "options_page": "src/options/options.html",
+  "action": {},
   "permissions": [
     "contextMenus",
     "tabs",

@@ -24,12 +24,9 @@ interface DomainUA {
   value: string
 }
 
-interface Cookies {
-  name: string
-  value: chrome.cookies.Cookie[]
-  toJSON: () => any
-}
+type Cookies = chrome.cookies.Cookie[]
 
 interface DomainCookies {
-  [name: string]: Cookies
+  cookies: { [name: string]: Cookies }
+  selected?: string
 }

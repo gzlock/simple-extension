@@ -37,7 +37,7 @@ export class Rules {
       })
       id++
     })
-    console.log('最终网络规则', rules)
+    // console.log('最终网络规则', rules)
     chrome.declarativeNetRequest.getDynamicRules(previousRules => {
       const previousRuleIds = previousRules.map(rule => rule.id)
       chrome.declarativeNetRequest.updateDynamicRules(

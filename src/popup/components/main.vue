@@ -15,7 +15,6 @@
 <script lang="ts">
 import { mapActions, mapMutations } from 'vuex'
 import { getCurrentTab } from '../../utils/getTab.js'
-import '../../style.css'
 import ChangeSearch from './changeSearch.vue'
 
 enum State {
@@ -43,7 +42,7 @@ export default {
     async save () {
       const value = JSON.parse(this.json)
       console.log('保存', value)
-      await chrome.storage.sync.set(value)
+      await chrome.storage.local.set(value)
       await chrome.runtime.sendMessage('update')
       alert('保存成功')
     },
