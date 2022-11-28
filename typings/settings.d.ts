@@ -7,10 +7,10 @@ interface Settings {
 }
 
 interface Menu {
+  title?: string
   checked?: boolean
   id?: string
   parentId?: string
-  title: string
   contexts?: chrome.contextMenus.ContextType[]
   children?: Menu[]
   urlPattern?: string[]

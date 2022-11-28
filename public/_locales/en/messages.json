@@ -11,8 +11,8 @@
   "default": {
     "message": "Default"
   },
-  "save_cookies_prompt": {
-    "message": "Please enter a name for cookies\nThe same name will be overwritten"
+  "prompt_save_cookies": {
+    "message": "Please enter a name for cookies\nThe same name will be overwrite\nSupport Emoji"
   },
   "remove_domain": {
     "message": "Remove [%s] domain data?"
@@ -42,7 +42,7 @@
     "message": "Current User-Agent"
   },
   "default_ua": {
-    "message": "Browser default"
+    "message": "Browser Default User-Agent"
   },
   "about": {
     "message": "About"
@@ -53,8 +53,14 @@
   "add_ua": {
     "message": "Add a new custom User-Agent"
   },
+  "custom_ua": {
+    "message": "Custom"
+  },
   "switch_cookie": {
     "message": "Switch cookie"
+  },
+  "switch_ua": {
+    "message": "Switch User-Agent"
   },
   "hint_name": {
     "message": "Input name"
@@ -74,7 +80,7 @@
   "used": {
     "message": "Used"
   },
-  "cookie_list": {
+  "cookies": {
     "message": "Cookies"
   },
   "reset": {
@@ -88,5 +94,14 @@
   },
   "github_link": {
     "message": "Github Link"
+  },
+  "save_cookie": {
+    "message": "Save Cookies"
+  },
+  "save_but_empty": {
+    "message": "Save(but %s no cookies)"
+  },
+  "switch": {
+    "message": "Switch"
   }
 }

@@ -18,7 +18,7 @@ export class ContextMenu {
     this.rules = rules
     this.updateMenu()
     chrome.contextMenus.onClicked.addListener((info, tab) => {
-      console.log('点击了菜单', this.menus[info.menuItemId])
+      // console.log('点击了菜单', this.menus[info.menuItemId])
       this.menus[info.menuItemId]?.click?.call(this, info, tab)
     })
     sleep(100).then(() => {
@@ -54,8 +54,9 @@ export class ContextMenu {
     this.rootMenuId = this.__createMenu({
       title: url.host,
       children: [
-        await this.__createCookieMenus(url),
-        await this.__createUAMenus(url),
+        ...(await this.__createCookieMenus(url)),
+        { type: 'separator' },
+        ...(await this.__createUAMenus(url)),
       ],
     })
   }
@@ -72,22 +73,22 @@ export class ContextMenu {
     await this.updateMenu()
   }
 
-  /**
-   * 创建选择文本后的菜单
-   */
-  private async __createCookieMenus (url: URL): Promise<Menu> {
+  private async __createCookieMenus (url: URL): Promise<Menu[]> {
     const domainCookies = await getCookies(url.toString())
     const hasCookies = domainCookies.length > 0
-    const children: Menu[] = [
+    const menus: Menu[] = [
       {
-        title: `保存${hasCookies ? '' : '(没有Cookies)'}`,
+        title: hasCookies
+          ? chrome.i18n.getMessage('save_cookie')
+          : chrome.i18n.getMessage('save_but_empty').
+            replace('%s', url.host),
         enabled: domainCookies.length > 0,
         click: (info, tab) => {
           chrome.scripting.executeScript(
             {
               target: { tabId: tab!.id! },
               func: function () {
-                return prompt('请输入名称（同名覆盖）')
+                return prompt(chrome.i18n.getMessage('prompt_save_cookies'))
               },
             }, results => {
               this.__saveCookies(results[0]?.result, url)
@@ -96,11 +97,9 @@ export class ContextMenu {
       }]
     const domain = this.settings.domains[url.host]
     if (domain) {
-      const switcher: Menu = { title: '切换', children: [] }
-      children.push(switcher)
       forEach(domain.cookies.cookies, (cookie: Cookies, name: string) => {
         const isSelected = domain.cookies.selected == name
-        switcher.children!.push({
+        menus.push({
           title: name,
           type: 'checkbox',
           checked: isSelected,
@@ -112,18 +111,18 @@ export class ContextMenu {
         })
       })
     }
-    return { title: 'Cookie', children }
+    return menus
   }
 
-  async __createUAMenus (url: URL): Promise<Menu> {
+  async __createUAMenus (url: URL): Promise<Menu[]> {
     const domain = this.settings.domains[url.host] || new Domain()
     this.settings.domains[url.host] = domain
     const customUA = Object.keys(this.settings.customUA)
-    const children: Menu[] = [
+    return [
       {
-        title: '默认',
+        title: chrome.i18n.getMessage('default_ua'),
         type: 'checkbox',
-        checked: !domain.ua || !domain.ua?.selected,
+        checked: !domain.ua?.selected,
         click: (_, tab) => {
           this.__selectUA(domain, null, null)
         },
@@ -146,7 +145,7 @@ export class ContextMenu {
         }
       }) as Menu[],
       {
-        title: '自定义',
+        title: chrome.i18n.getMessage('custom_ua'),
         enabled: customUA.length > 0,
         children: customUA.map(name => {
           return {
@@ -160,7 +159,6 @@ export class ContextMenu {
         }),
       },
     ]
-    return { title: '切换User-Agent', children }
   }
 
   private async __selectUA (

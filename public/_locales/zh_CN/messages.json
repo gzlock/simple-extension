@@ -11,8 +11,8 @@
   "default": {
     "message": "默认"
   },
-  "save_cookies_prompt": {
-    "message": "请输入要保存的名称\n同名将会覆盖"
+  "prompt_save_cookies": {
+    "message": "请输入要保存的名称\n同名将会覆盖，支持Emoji字符"
   },
   "remove_domain": {
     "message": "删除[%s]域名数据?"
@@ -42,7 +42,7 @@
     "message": "当前的User-Agent"
   },
   "default_ua": {
-    "message": "浏览器默认"
+    "message": "浏览器默认User-Agent"
   },
   "about": {
     "message": "关于"
@@ -53,8 +53,14 @@
   "add_ua": {
     "message": "添加自定义User-Agent"
   },
+  "custom_ua": {
+    "message": "自定义"
+  },
   "switch_cookie": {
     "message": "切换Cookie"
+  },
+  "switch_ua": {
+    "message": "切换User-Agent"
   },
   "hint_name": {
     "message": "输入名称"
@@ -74,7 +80,7 @@
   "used": {
     "message": "已在使用中"
   },
-  "cookie_list": {
+  "cookies": {
     "message": "Cookies"
   },
   "reset": {
@@ -88,5 +94,14 @@
   },
   "github_link": {
     "message": "Github 链接"
+  },
+  "save_cookie": {
+    "message": "保存Cookies"
+  },
+  "save_but_empty": {
+    "message": "保存(%s没有Cookies)"
+  },
+  "switch": {
+    "message": "切换"
   }
 }
