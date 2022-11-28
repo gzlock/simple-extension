@@ -26,4 +26,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           body_path: ./CHANGELOG.txt
           files: |
-            ./simple-extension.crx
+            ./simple-extension.zip
