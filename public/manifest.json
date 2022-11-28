@@ -25,10 +25,8 @@
     "tabs",
     "activeTab",
     "cookies",
-    "webNavigation",
     "webRequest",
     "storage",
-    "bookmarks",
     "scripting",
     "declarativeNetRequest"
   ],
