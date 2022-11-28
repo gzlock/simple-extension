@@ -5,7 +5,6 @@
     <el-alert :closable="false">
       <el-button type="primary" @click="saveData">{{ ui.import }}</el-button>
     </el-alert>
-    <el-button @click="save">保存</el-button>
   </div>
 </template>
 
