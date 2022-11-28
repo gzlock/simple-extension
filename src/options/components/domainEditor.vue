@@ -1,32 +1,32 @@
 <template>
   <div>
     <h3>
-      正在使用的UA
-      <el-button @click="clearUA" v-if="hadUA" type="danger" size="small">恢复默认</el-button>
+      {{ ui.current_ua }}
+      <el-button @click="clearUA" v-if="hadUA" type="danger" size="small">{{ ui.reset }}</el-button>
     </h3>
     <el-alert :closable="false">
       <div v-if="hadUA" style="color: #409EFF">
         {{ domains[domain].ua?.value }}
       </div>
-      <div v-else>默认</div>
+      <div v-else>{{ ui.default_ua }}</div>
     </el-alert>
     <el-divider/>
-    <h3>Cookies内容</h3>
-    <el-tabs closable @tab-remove="remove" v-model="tab">
+    <h3>{{ ui.cookie_list }}</h3>
+    <el-tabs closable @tab-remove="remove" v-model="tab" class="cookies_tab">
       <el-tab-pane v-for="(name,index) in names"
-                   :label="`方案${name}`"
+                   :label="name"
                    :key="`ce-${index}`"
                    lazy
                    :name="index">
         <el-alert :closable="false">
-          切换Cookie方案
+          {{ ui.switch_cookie }}
           <el-button @click="useCookie(name)" size="small" type="primary">
-            {{ isSelected(name) ? '已在使用中' : '使用' }}
+            {{ isSelected(name) ? ui.used : ui.use }}
           </el-button>
         </el-alert>
-        <el-table :data="domains[domain].cookies[name]" border>
-          <el-table-column label="名称" prop="name"/>
-          <el-table-column label="值" prop="value"/>
+        <el-table :data="domains[domain].cookies.cookies[name]" border>
+          <el-table-column :label="ui.name" prop="name"/>
+          <el-table-column :label="ui.value" prop="value"/>
         </el-table>
       </el-tab-pane>
     </el-tabs>
@@ -49,11 +49,11 @@ export default {
     ...mapActions(['save']),
     async remove (index: number) {
       const name = this.names[index]
-      if (!confirm(`删除【${name}】?`)) return
+      if (!confirm(this.ui.remove_cookies.replace('%s', name))) return
       const domain: Domain = this.domains[this.domain]
-      delete domain.cookies.cookies[name]
       if (domain.cookies.selected == name)
         domain.cookies.selected = undefined
+      delete domain.cookies.cookies[name]
       await this.save()
       this.tab = 0
       chrome.runtime.sendMessage('update')
@@ -73,7 +73,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['domains']),
+    ...mapState(['domains', 'ui']),
     names (): string[] {return Object.keys(this.domains[this.domain].cookies.cookies)},
     hadUA (): boolean {
       return this.domains[this.domain].ua && this.domains[this.domain].ua.value
@@ -83,5 +83,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

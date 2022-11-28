@@ -24,9 +24,10 @@ export async function saveData ({
   customUA,
   domains,
 }: Settings) {
+  domains = JSON.parse(JSON.stringify(domains))
   const _domains: any = {}
   Object.keys(domains).forEach(domain => {
-    _domains[domain] = domains[domain].toJSON()
+    _domains[domain] = domains[domain]
   })
   const data = {
     config: { version: chrome.runtime.getManifest().version },

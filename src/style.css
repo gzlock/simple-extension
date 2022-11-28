@@ -1,11 +1,14 @@
 body {
     margin: 0;
-    display: flex;
-    justify-content: center;
-    min-width: 320px;
     min-height: 100vh;
 }
 
 #app {
-    margin-top: 2rem;
+    margin: 2rem 20px 0 20px;
+}
+
+.cookies_tab .el-tabs__item {
+    min-width: 80px !important;
+    display: inline-flex;
+    justify-content: space-around;
 }

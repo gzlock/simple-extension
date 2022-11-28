@@ -1,0 +1,92 @@
+{
+  "extensionName": {
+    "message": "简易扩展"
+  },
+  "extensionDesc": {
+    "message": "让每个网站都可以保存/切换Cookies、切换User-Agent。"
+  },
+  "add": {
+    "message": "添加"
+  },
+  "default": {
+    "message": "默认"
+  },
+  "save_cookies_prompt": {
+    "message": "请输入要保存的名称\n同名将会覆盖"
+  },
+  "remove_domain": {
+    "message": "删除[%s]域名数据?"
+  },
+  "remove_cookies": {
+    "message": "删除 %s ?"
+  },
+  "name": {
+    "message": "名称"
+  },
+  "value": {
+    "message": "值"
+  },
+  "action": {
+    "message": "操作"
+  },
+  "data": {
+    "message": "数据"
+  },
+  "domain": {
+    "message": "域名"
+  },
+  "ua": {
+    "message": "User-Agent"
+  },
+  "current_ua": {
+    "message": "当前的User-Agent"
+  },
+  "default_ua": {
+    "message": "浏览器默认"
+  },
+  "about": {
+    "message": "关于"
+  },
+  "options_title": {
+    "message": "简易扩展的管理器"
+  },
+  "add_ua": {
+    "message": "添加自定义User-Agent"
+  },
+  "switch_cookie": {
+    "message": "切换Cookie"
+  },
+  "hint_name": {
+    "message": "输入名称"
+  },
+  "hint_value": {
+    "message": "输入值"
+  },
+  "empty": {
+    "message": "没有数据"
+  },
+  "import": {
+    "message": "导入"
+  },
+  "use": {
+    "message": "使用"
+  },
+  "used": {
+    "message": "已在使用中"
+  },
+  "cookie_list": {
+    "message": "Cookies"
+  },
+  "reset": {
+    "message": "重置"
+  },
+  "import_success": {
+    "message": "成功导入"
+  },
+  "import_fail": {
+    "message": "不是JSON格式，导入失败"
+  },
+  "github_link": {
+    "message": "Github 链接"
+  }
+}

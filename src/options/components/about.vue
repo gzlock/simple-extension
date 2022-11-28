@@ -1,10 +1,10 @@
 <template>
   <div>
     <div>
-      <h2>简易扩展 v{{ version }}</h2>
+      <h2>{{ ui.extensionName }} v{{ version }}</h2>
       <div>
         <el-link href="https://github.com/gzlock/simple-extension">
-          项目开源地址
+          {{ ui.github_link }}
         </el-link>
       </div>
     </div>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'about',
   data () {
@@ -19,6 +21,7 @@ export default {
       version: chrome.runtime.getManifest().version,
     }
   },
+  computed: { ...mapState(['ui']) },
 }
 </script>
 

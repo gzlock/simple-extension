@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-alert title="添加新的UA" type="success" :closable="false">
+    <el-alert :title="ui.add_ua" type="success" :closable="false">
       <div style="display: flex">
-        <el-input v-model="form.name" placeholder="输入名称"/>
-        <el-input v-model="form.value" placeholder="输入值"/>
-        <el-button type="success" @click="add">添加</el-button>
+        <el-input v-model="form.name" :placeholder="ui.hint_name"/>
+        <el-input v-model="form.value" :placeholder="ui.hint_value"/>
+        <el-button type="success" @click="add">{{ ui.add }}</el-button>
       </div>
     </el-alert>
-    <el-table :data="names" stripe style="width: 100%" table-layout="auto">
+    <el-table :data="names" stripe style="width: 100%" table-layout="auto" :empty-text="ui.empty">
       <el-table-column label="名称" width="180">
         <template #default="scope">
           <el-input :value="scope.row" @blur="event=>modifyName(name,event.target.value)"/>
@@ -89,7 +89,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['config', 'domains', 'customUA']),
+    ...mapState(['config', 'domains', 'customUA', 'ui']),
     names () {
       return Object.keys(this.customUA)
     },

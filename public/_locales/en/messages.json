@@ -1,0 +1,92 @@
+{
+  "extensionName": {
+    "message": "Simple Extension"
+  },
+  "extensionDesc": {
+    "message": "Let each website can save/switch cookies, switch User-Agent "
+  },
+  "add": {
+    "message": "Add"
+  },
+  "default": {
+    "message": "Default"
+  },
+  "save_cookies_prompt": {
+    "message": "Please enter a name for cookies\nThe same name will be overwritten"
+  },
+  "remove_domain": {
+    "message": "Remove [%s] domain data?"
+  },
+  "remove_cookies": {
+    "message": "Remove %s ?"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "value": {
+    "message": "Value"
+  },
+  "action": {
+    "message": "Action"
+  },
+  "data": {
+    "message": "Data"
+  },
+  "domain": {
+    "message": "Domain"
+  },
+  "ua": {
+    "message": "User-Agent"
+  },
+  "current_ua": {
+    "message": "Current User-Agent"
+  },
+  "default_ua": {
+    "message": "Browser default"
+  },
+  "about": {
+    "message": "About"
+  },
+  "options_title": {
+    "message": "Simple Extension Manager"
+  },
+  "add_ua": {
+    "message": "Add a new custom User-Agent"
+  },
+  "switch_cookie": {
+    "message": "Switch cookie"
+  },
+  "hint_name": {
+    "message": "Input name"
+  },
+  "hint_value": {
+    "message": "Input value"
+  },
+  "empty": {
+    "message": "Empty"
+  },
+  "import": {
+    "message": "Import"
+  },
+  "use": {
+    "message": "Use"
+  },
+  "used": {
+    "message": "Used"
+  },
+  "cookie_list": {
+    "message": "Cookies"
+  },
+  "reset": {
+    "message": "Reset"
+  },
+  "import_success": {
+    "message": "Import Success"
+  },
+  "import_fail": {
+    "message": "Fail: not a json data format"
+  },
+  "github_link": {
+    "message": "Github Link"
+  }
+}

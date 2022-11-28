@@ -5,7 +5,7 @@
         <cookie-list :domain="domain"/>
       </el-tab-pane>
     </el-tabs>
-    <el-empty v-else description="无数据"/>
+    <el-empty v-else :description="ui.empty"/>
   </div>
 </template>
 
@@ -22,14 +22,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['domains']),
+    ...mapState(['domains', 'ui']),
     names () {return Object.keys(this.domains)},
   },
   methods: {
     ...mapActions(['save']),
     async remove (index: number) {
       const domain = this.names[index]
-      if (!confirm(`清空【${domain}】的所有内容？`)) return
+      if (!confirm(this.ui.remove_domain.replace('%s', domain))) return
       delete this.domains[domain]
       await this.save()
       chrome.runtime.sendMessage('update')

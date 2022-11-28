@@ -2,12 +2,12 @@
   "name": "simple-extension-v2",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "watch": "vite build --watch --mode development",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "create_languages": "ts-node-esm languages.ts"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
@@ -23,6 +23,7 @@
     "@vitejs/plugin-legacy": "^2.3.1",
     "@vitejs/plugin-vue": "^3.2.0",
     "terser": "^5.15.1",
+    "ts-node": "^10.9.1",
     "typescript": "^4.6.4",
     "unplugin-auto-import": "^0.12.0",
     "unplugin-icons": "^0.14.14",

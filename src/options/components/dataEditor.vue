@@ -3,13 +3,15 @@
     <el-input type="textarea" v-model="json"
               :autosize="{ minRows: 5,maxRows:20 }" resize="none"/>
     <el-alert :closable="false">
-      <el-button type="primary" @click="saveData">导入</el-button>
+      <el-button type="primary" @click="saveData">{{ ui.import }}</el-button>
     </el-alert>
+    <el-button @click="save">保存</el-button>
   </div>
 </template>
 
 <script>
 import { ElMessage } from 'element-plus'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'dataEditor',
@@ -24,7 +26,9 @@ export default {
       this.setJson()
     },
   },
+  computed: { ...mapState(['ui']) },
   methods: {
+    ...mapActions(['load', 'save']),
     async setJson () {
       this.json = JSON.stringify(await chrome.storage.local.get(), null, 4)
     },
@@ -33,17 +37,22 @@ export default {
       try {
         json = JSON.parse(this.json)
       } catch (e) {
-        alert('数据无法进行JSON格式化，导入失败')
+        return ElMessage({
+          message: this.ui.import_fail,
+          type: 'error',
+        })
       }
       if (!json) return
       json['config'] = { version: chrome.runtime.getManifest().version }
-      if (!json['domains']) return ElMessage.error('缺少domains字段')
+      if (!json['domains']) json['domains'] = {}
       if (!json['customUA']) json['customUA'] = {}
       await chrome.storage.local.set(json)
       ElMessage({
-        message: '成功导入数据',
+        message: this.ui.import_success,
         type: 'success',
       })
+      await this.load()
+      await this.setJson()
     },
   },
 }

@@ -1,25 +1,24 @@
 <template>
   <div class="container">
     <el-tabs type="border-card" v-model="tab">
-      <el-tab-pane label="管理域名" name="cookie" :lazy="true" class="pane">
+      <el-tab-pane :label="ui.domain" name="cookie" :lazy="true">
         <domains/>
       </el-tab-pane>
-      <el-tab-pane label="管理自定义UA" name="ua" :lazy="true" class="pane">
+      <el-tab-pane :label="ui.ua" name="ua" :lazy="true">
         <ua/>
       </el-tab-pane>
-      <el-tab-pane label="数据" name="data" :lazy="true" class="pane">
+      <el-tab-pane :label="ui.data" name="data" :lazy="true">
         <data-editor/>
       </el-tab-pane>
-      <el-tab-pane label="关于" name="about" :lazy="true" class="pane">
+      <el-tab-pane :label="ui.about" name="about" :lazy="true">
         <about/>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 <script lang="ts">
-
 import Ua from './ua.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import Domains from './domainTab.vue'
 import About from './about.vue'
 import DataEditor from './dataEditor.vue'
@@ -32,7 +31,7 @@ export default {
     }
   },
   async beforeMount () {
-    document.title += ` v${chrome.runtime.getManifest().version}`
+    document.title = `${chrome.i18n.getMessage('options_title')} v${chrome.runtime.getManifest().version}`
     this.hash()
     await this.load()
     // window.addEventListener('hashchange', () => {
@@ -44,6 +43,7 @@ export default {
       window.location.hash = val
     },
   },
+  computed: { ...mapState((['ui'])) },
   methods: {
     ...mapActions([
       'load',
@@ -61,10 +61,7 @@ export default {
 </script>
 <style scoped>
 .container {
-  width: 800px;
-}
-.pane{
-  max-height: 800px;
-  overflow: auto;
+  margin: 0 20px;
+  min-width: 800px;
 }
 </style>
