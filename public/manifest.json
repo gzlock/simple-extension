@@ -25,7 +25,6 @@
     "tabs",
     "activeTab",
     "cookies",
-    "webRequest",
     "storage",
     "scripting",
     "declarativeNetRequest"
