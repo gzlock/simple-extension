@@ -186,12 +186,8 @@ export class ContextMenu {
   ) {
     console.log('__onUpdatedTab', changeInfo)
     if (!tab.active) return
-    if (changeInfo.status == 'loading') {
-      await this.clear()
-      await this.updateMenu()
-    } else if (changeInfo.status == 'complete') {
-      await this.updateMenu()
-    }
+    await this.clear()
+    await this.updateMenu()
   }
 
   __onRemovedTab (
