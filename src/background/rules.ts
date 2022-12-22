@@ -6,16 +6,20 @@ import { loadData } from '../utils/data'
 import { forEach } from 'lodash-es'
 import { Domain } from '../utils/domain'
 
+// 网络规则
 export class Rules {
   constructor () {
     this.update()
   }
 
   async update () {
-    const data = await loadData()
+    return this.updateFromData(await loadData())
+  }
+
+  async updateFromData (data: Settings) {
     const rules: Rule[] = []
     let id = 1
-    forEach(data.domains, (domainData: Domain, domain) => {
+    forEach(data.domains, (domainData: Domain, domain: string) => {
       if (!domainData.ua?.value) return
       rules.push({
         id,
@@ -39,7 +43,12 @@ export class Rules {
     })
     // console.log('最终网络规则', rules)
     chrome.declarativeNetRequest.getDynamicRules(previousRules => {
+      // 收集旧规则的id
       const previousRuleIds = previousRules.map(rule => rule.id)
+
+      // 删除旧规则的id
+      // 同时
+      // 添加新的规则
       chrome.declarativeNetRequest.updateDynamicRules(
         {
           removeRuleIds: previousRuleIds,
