@@ -36,13 +36,13 @@
     "http://*/*",
     "https://*/*"
   ],
-  "web_accessible_resources": [
+  "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
-      "resources": [
-        "getTab.js"
+      "js": [
+        "src/content/index.js"
       ]
     }
   ]
