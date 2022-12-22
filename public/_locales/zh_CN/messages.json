@@ -98,8 +98,8 @@
   "save_cookie": {
     "message": "保存Cookies"
   },
-  "save_but_empty": {
-    "message": "保存(%s没有Cookies)"
+  "alert_cookies_empty": {
+    "message": "%s\n没有Cookies"
   },
   "switch": {
     "message": "切换"

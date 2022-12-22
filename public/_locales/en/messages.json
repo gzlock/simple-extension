@@ -98,8 +98,8 @@
   "save_cookie": {
     "message": "Save Cookies"
   },
-  "save_but_empty": {
-    "message": "Save(but %s no cookies)"
+  "alert_cookies_empty": {
+    "message": "%s\nNo cookies"
   },
   "switch": {
     "message": "Switch"
