@@ -16,8 +16,19 @@ export async function getCookies (url: string): Promise<Cookies> {
   const cookies = await chrome.cookies.getAll({ url })
   const results: any[] = []
   for (let i = 0; i < cookies.length; i++) {
-    results.push(pick(cookies[i],
-      ['domain', 'name', 'value', 'path', 'httpOnly', 'expirationDate']))
+    results.push(
+      pick(
+        cookies[i],
+        [
+          'domain',
+          'name',
+          'value',
+          'path',
+          'httpOnly',
+          'expirationDate',
+        ],
+      ),
+    )
   }
   return results
 }
