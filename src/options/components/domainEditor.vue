@@ -32,9 +32,11 @@
         </el-tag>
       </div>
 
-      <!--   cookies内容区域   -->
+      <!--  cookies内容区域  -->
       <div v-if="selectedName">
         <h4>{{ ui.cookies_content.replace('%s', selectedName) }}</h4>
+
+        <!--  操作区域  -->
         <el-alert :closable="false">
           <el-space :size="20">
             <span>{{ ui.cookies_action }}</span>
@@ -44,6 +46,7 @@
             <el-button type="danger" size="small" @click="removeFromName(selectedName)">删除</el-button>
           </el-space>
         </el-alert>
+
         <el-table :data="domains[domain].cookies.cookies[selectedName]" border>
           <el-table-column :label="ui.name" prop="name"/>
           <el-table-column :label="ui.value" prop="value"/>
