@@ -12,7 +12,7 @@ export async function loadData (): Promise<Settings> {
       domains[domain] = Domain.fromJSON(data)
     })
   }
-  console.log('data.ts', 'loadData', data)
+  // console.log('data.ts', 'loadData', data)
   return {
     config: data?.config,
     domains: domains,
@@ -34,7 +34,7 @@ export async function saveData ({
     customUA,
     domains: _domains,
   }
-  console.log('data.ts', 'saveData', data)
+  // console.log('data.ts', 'saveData', data)
   await chrome.storage.local.set(data)
 }
 

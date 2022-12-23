@@ -15,27 +15,36 @@ export class ContextMenu {
   private menus: { [key: string]: Menu } = {}
 
   constructor (rules: Rules) {
+    console.log('创建Menu class')
     this.rules = rules
-    this.updateMenu()
     chrome.contextMenus.onClicked.addListener((info, tab) => {
       // console.log('点击了菜单', this.menus[info.menuItemId])
       this.menus[info.menuItemId]?.click?.call(this, info, tab)
     })
     sleep(100).then(() => {
-      chrome.tabs.onUpdated.addListener(this.__onUpdatedTab.bind(this))
-      chrome.tabs.onRemoved.addListener(this.__onRemovedTab.bind(this))
-      chrome.tabs.onActivated.addListener(this.__onActivatedTab.bind(this))
-      chrome.windows.onFocusChanged.addListener(
-        this.__onWindowsFocusChanged.bind(this))
+      chrome.tabs.onUpdated.addListener(this.__loadData.bind(this))
+      chrome.tabs.onRemoved.addListener(this.__loadData.bind(this))
+      chrome.tabs.onActivated.addListener(this.__loadData.bind(this))
+      chrome.windows.onFocusChanged.addListener(this.__loadData.bind(this))
+
+      // chrome.tabs.onUpdated.addListener(this.__onUpdatedTab.bind(this))
+      // chrome.tabs.onRemoved.addListener(this.__onRemovedTab.bind(this))
+      // chrome.tabs.onActivated.addListener(this.__onActivatedTab.bind(this))
+      // chrome.windows.onFocusChanged.addListener(
+      //   this.__onWindowsFocusChanged.bind(this)
+      // )
+
     })
   }
 
-  async updateMenu (tab?: chrome.tabs.Tab) {
-    await this.clear()
+  async __loadData () {
     this.settings = await loadData()
-    tab ||= await getCurrentTab()
-    console.log('updateMenu', tab?.url)
-    if (!tab || !tab.url || !tab.url.startsWith('http')) {
+  }
+
+  async updateMenu (tab: chrome.tabs.Tab) {
+    console.log('updateMenu', tab.url)
+    await this.clear()
+    if (!tab.url || !tab.url.startsWith('http')) {
       return
     }
     await this.__updateMenu(tab)
@@ -51,8 +60,16 @@ export class ContextMenu {
    */
   private async __createRootMenu (url: URL) {
     console.log('__createRootMenu')
+
+    const urlPattern: string[] = []
+    if (url.host) {
+      urlPattern.push(`http://${url.host}/*`)
+      urlPattern.push(`https://${url.host}/*`)
+    }
+
     this.rootMenuId = this.__createMenu({
       title: url.host,
+      urlPattern,
       children: [
         ...(await this.__createCookieMenus(url)),
         { type: 'separator' },
@@ -70,31 +87,38 @@ export class ContextMenu {
     domain.cookies.selected = name
     domain.cookies.cookies[name] = cookies
     await saveData(this.settings)
-    await this.updateMenu()
   }
 
   private async __createCookieMenus (url: URL): Promise<Menu[]> {
-    const domainCookies = await getCookies(url.toString())
-    const hasCookies = domainCookies.length > 0
     const menus: Menu[] = [
       {
-        title: hasCookies
-          ? chrome.i18n.getMessage('save_cookie')
-          : chrome.i18n.getMessage('save_but_empty').
-            replace('%s', url.host),
-        enabled: domainCookies.length > 0,
-        click: (info, tab) => {
-          chrome.scripting.executeScript(
-            {
-              target: { tabId: tab!.id! },
-              func: function () {
-                return prompt(chrome.i18n.getMessage('prompt_save_cookies'))
-              },
-            }, results => {
-              this.__saveCookies(results[0]?.result, url)
-            })
+        title: chrome.i18n.getMessage('save_cookie'),
+        click: async (info, tab) => {
+          const cookies = await getCookies(url.toString())
+          if (cookies.length == 0) {
+            chrome.scripting.executeScript(
+              {
+                target: { tabId: tab!.id! },
+                func: function () {
+                  const str = chrome.i18n.getMessage('alert_cookies_empty')
+                  const host = window.location.host
+                  alert(str.replace('%s', host))
+                },
+              })
+          } else {
+            chrome.scripting.executeScript(
+              {
+                target: { tabId: tab!.id! },
+                func: function () {
+                  return prompt(chrome.i18n.getMessage('prompt_save_cookies'))
+                },
+              }, results => {
+                this.__saveCookies(results[0]?.result, url)
+              })
+          }
         },
       }]
+
     const domain = this.settings.domains[url.host]
     if (domain) {
       forEach(domain.cookies.cookies, (cookie: Cookies, name: string) => {
@@ -164,38 +188,12 @@ export class ContextMenu {
   private async __selectUA (
     domain: Domain, name: string | null, value: string | null) {
     domain.useUA(name, value)
-    await saveData(this.settings)
-    await this.rules.update()
+    await Promise.all([
+      saveData(this.settings),
+      this.rules.updateFromData(this.settings),
+    ])
+    await sleep(10)
     await chrome.tabs.reload((await getCurrentTab())!.id!)
-  }
-
-  async __onWindowsFocusChanged (windowId: number) {
-    console.log('__onWindowsFocusChanged', windowId)
-    this.updateMenu()
-  }
-
-  async __onActivatedTab (activeInfo: chrome.tabs.TabActiveInfo) {
-    console.log('__onActivatedTab')
-    this.updateMenu()
-  }
-
-  async __onUpdatedTab (
-    tabId: number,
-    changeInfo: chrome.tabs.TabChangeInfo,
-    tab: chrome.tabs.Tab,
-  ) {
-    console.log('__onUpdatedTab', changeInfo)
-    if (!tab.active) return
-    await this.clear()
-    await this.updateMenu()
-  }
-
-  __onRemovedTab (
-    tabId: number,
-    removedInfo: chrome.tabs.TabRemoveInfo,
-  ) {
-    console.log('__onRemovedTab')
-    // this.updateMenu()
   }
 
   __createMenu (option: Menu): string {
@@ -221,7 +219,7 @@ export class ContextMenu {
   }
 
   async clear () {
-    console.log('清空菜单')
+    // console.log('清空菜单')
     this.menus = {}
     await new Promise<void>(resolve => {
       chrome.contextMenus.removeAll(() => resolve())
@@ -230,5 +228,9 @@ export class ContextMenu {
 
   switch (): any[] {
     return []
+  }
+
+  loadData () {
+    return this.__loadData()
   }
 }

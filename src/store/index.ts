@@ -34,7 +34,7 @@ export const popupStore = createStore<SimpleExtensionStore>({
       options_title: chrome.i18n.getMessage('options_title'),
       add_ua: chrome.i18n.getMessage('add_ua'),
       custom_ua: chrome.i18n.getMessage('custom_ua'),
-      switch_cookie: chrome.i18n.getMessage('switch_cookie'),
+      cookies_action: chrome.i18n.getMessage('cookies_action'),
       switch_ua: chrome.i18n.getMessage('switch_ua'),
       hint_name: chrome.i18n.getMessage('hint_name'),
       hint_value: chrome.i18n.getMessage('hint_value'),
@@ -49,7 +49,11 @@ export const popupStore = createStore<SimpleExtensionStore>({
       github_link: chrome.i18n.getMessage('github_link'),
       save_cookie: chrome.i18n.getMessage('save_cookie'),
       save_but_empty: chrome.i18n.getMessage('save_but_empty'),
-      switch: chrome.i18n.getMessage('switch')
+      switch: chrome.i18n.getMessage('switch'),
+      search_domain: chrome.i18n.getMessage('search_domain'),
+      search_domain_hint: chrome.i18n.getMessage('search_domain_hint'),
+      cookies_content: chrome.i18n.getMessage('cookies_content'),
+      privacy_policy: chrome.i18n.getMessage('privacy_policy')
     },
   },
   mutations: {

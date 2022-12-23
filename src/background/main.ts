@@ -6,25 +6,46 @@ import { forEach, isEmpty } from 'lodash-es'
 
 const rules = new Rules()
 const menu = new ContextMenu(rules)
-chrome.runtime.onMessage.addListener(async (msg: any, sender, res) => {
-  if (msg == 'update') {
-    await rules.update()
-    await menu.updateMenu()
-  }
-})
 
-// 填充cookies
-chrome.storage.local.get((data: Settings) => {
-  forEach(data.domains, (domain: Domain) => {
-    if (domain.cookies.selected) {
-      const cookies = domain.cookies.cookies[domain.cookies.selected]
-      if (!isEmpty(cookies)) fillCookies(cookies)
-    }
+// 防止bg.js反复休眠唤醒而导致的重复执行，可以放在onInstalled里
+chrome.runtime.onInstalled.addListener(async () => {
+  //console.log('chrome.runtime.onInstalled')
+
+  // 填充cookies
+  chrome.storage.local.get((data: Settings) => {
+    forEach(data.domains, (domain: Domain) => {
+      if (domain.cookies.selected) {
+        const cookies = domain.cookies.cookies[domain.cookies.selected]
+        if (!isEmpty(cookies)) fillCookies(cookies)
+      }
+    })
   })
 })
 
+// 监听消息事件功能需要在background.js每次被唤醒后都执行，所以不能放去onInstalled
+chrome.runtime.onMessage.addListener(
+  async (msg: any, sender, sendResponse) => {
+    console.log('background.js', 'chrome.runtime.onMessage', msg)
+    if (msg == 'update') {
+      await rules.update()
+      await menu.loadData()
+    } else if (msg == 'contextmenu') {
+      await menu.updateMenu(sender.tab!)
+    }
+    sendResponse('ok')
+  },
+)
+
 // 扩展图标的点击行为
-chrome.action.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
+  let domain = tab.url ? `#${new URL(tab.url).host}` : ''
   const url = chrome.runtime.getURL('src/options/options.html')
-  chrome.tabs.create({ url })
+  // console.log('打开', url + domain)
+  await chrome.tabs.create({ url: url + domain })
 })
+
+// 切换Tab时清空右键菜单
+// 针对 浏览器设置页面、收藏夹页面之类
+// chrome.tabs.onActivated.addListener(async (activeInfo) => {
+//   await menu.clear()
+// })

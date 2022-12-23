@@ -6,8 +6,9 @@ import { writeFileSync } from 'fs'
 const languages: { [key: string]: string[] } = {
   'extensionName': ['Simple Extension', '简易扩展'],
   'extensionDesc': [
-    'Let each website can save/switch cookies, switch User-Agent ',
-    '让每个网站都可以保存/切换Cookies、切换User-Agent。'],
+    'Let each website can save/switch cookies, switch User-Agent',
+    '让每个网站都可以保存/切换Cookies、切换User-Agent。',
+  ],
   'add': ['Add', '添加'],
   'default': ['Default', '默认'],
   'prompt_save_cookies': [
@@ -28,7 +29,7 @@ const languages: { [key: string]: string[] } = {
   'options_title': ['Simple Extension Manager', '简易扩展的管理器'],
   'add_ua': ['Add a new custom User-Agent', '添加自定义User-Agent'],
   'custom_ua': ['Custom', '自定义'],
-  'switch_cookie': ['Switch cookie', '切换Cookie'],
+  'cookies_action': ['Action', '操作'],
   'switch_ua': ['Switch User-Agent', '切换User-Agent'],
   'hint_name': ['Input name', '输入名称'],
   'hint_value': ['Input value', '输入值'],
@@ -40,10 +41,20 @@ const languages: { [key: string]: string[] } = {
   'reset': ['Reset', '重置'],
   'import_success': ['Import Success', '成功导入'],
   'import_fail': ['Fail: not a json data format', '不是JSON格式，导入失败'],
-  'github_link': ['Github Link', 'Github 链接'],
+  'github_link': [
+    'Simple Extension\'s Github repository',
+    '简易扩展的Github代码仓库链接',
+  ],
   'save_cookie': ['Save Cookies', '保存Cookies'],
   'save_but_empty': ['Save(but %s no cookies)', '保存(%s没有Cookies)'],
   'switch': ['Switch', '切换'],
+  'search_domain': ['Search domain', '搜索域名'],
+  'search_domain_hint': ['Input keyword', '输入搜索内容'],
+  'cookies_content': ['%s content', '%s 的内容'],
+  'privacy_policy': [
+    'Simple Extension\'s Privacy Policy(Chinese)',
+    '简易扩展的隐私政策说明',
+  ],
 }
 
 const dir: string[] = ['public/_locales', 'dist/_locales']

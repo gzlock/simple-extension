@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ElMessage } from 'element-plus'
 import { mapActions, mapState } from 'vuex'
 

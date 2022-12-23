@@ -1,6 +1,6 @@
 ![img](./public/img/icon_48.png)
 
-# Simple Extension v0.9.2
+# Simple Extension v0.9.*
 
 基于Chrome Extension Manifest V3标准
 

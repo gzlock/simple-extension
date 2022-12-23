@@ -3,7 +3,7 @@
     "message": "Simple Extension"
   },
   "extensionDesc": {
-    "message": "Let each website can save/switch cookies, switch User-Agent "
+    "message": "Let each website can save/switch cookies, switch User-Agent"
   },
   "add": {
     "message": "Add"
@@ -56,8 +56,8 @@
   "custom_ua": {
     "message": "Custom"
   },
-  "switch_cookie": {
-    "message": "Switch cookie"
+  "cookies_action": {
+    "message": "Action"
   },
   "switch_ua": {
     "message": "Switch User-Agent"
@@ -93,15 +93,27 @@
     "message": "Fail: not a json data format"
   },
   "github_link": {
-    "message": "Github Link"
+    "message": "Simple Extension's Github repository"
   },
   "save_cookie": {
     "message": "Save Cookies"
   },
-  "alert_cookies_empty": {
-    "message": "%s\nNo cookies"
+  "save_but_empty": {
+    "message": "Save(but %s no cookies)"
   },
   "switch": {
     "message": "Switch"
+  },
+  "search_domain": {
+    "message": "Search domain"
+  },
+  "search_domain_hint": {
+    "message": "Input keyword"
+  },
+  "cookies_content": {
+    "message": "%s content"
+  },
+  "privacy_policy": {
+    "message": "Simple Extension's Privacy Policy(Chinese)"
   }
 }

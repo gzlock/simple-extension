@@ -4,7 +4,7 @@ document.addEventListener('mousedown', (e) => {
     chrome.runtime.sendMessage(
       'contextmenu',
       (res) => {
-        console.log('simple-extension update menu', res)
+        // console.log('simple-extension update menu', res)
       },
     )
   }

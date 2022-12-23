@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-tabs type="border-card" v-model="tab">
-      <el-tab-pane :label="ui.domain" name="cookie" :lazy="true">
+      <el-tab-pane :label="ui.domain" name="domain" :lazy="true">
         <domains/>
       </el-tab-pane>
       <el-tab-pane :label="ui.ua" name="ua" :lazy="true">
@@ -32,16 +32,14 @@ export default {
   },
   async beforeMount () {
     document.title = `${chrome.i18n.getMessage('options_title')} v${chrome.runtime.getManifest().version}`
-    this.hash()
+    this.getHash()
     await this.load()
+    this.$watch('tab', () => {
+      window.location.hash = this.tab
+    })
     // window.addEventListener('hashchange', () => {
     //   this.hash()
     // })
-  },
-  watch: {
-    tab (val: any) {
-      window.location.hash = val
-    },
   },
   computed: { ...mapState((['ui'])) },
   methods: {
@@ -50,10 +48,10 @@ export default {
       'save',
       'clear',
     ]),
-    hash () {
+    getHash () {
       const hash = window.location.hash.replace('#', '')
-      let tab = ['cookie', 'ua', 'data', 'about'].includes(hash) ? hash : 'cookie'
-      console.log('tab', tab)
+      const value = hash.split('=')
+      let tab = ['domain', 'ua', 'data', 'about'].includes(value[0]) ? value[0] : 'domain'
       this.tab = tab
     },
   },
