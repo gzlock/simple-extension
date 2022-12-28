@@ -7,19 +7,17 @@ import { forEach, isEmpty } from 'lodash-es'
 const rules = new Rules()
 const menu = new ContextMenu(rules)
 
-// 防止bg.js反复休眠唤醒而导致的重复执行，可以放在onInstalled里
-chrome.runtime.onInstalled.addListener(async () => {
-  //console.log('chrome.runtime.onInstalled')
-
-  // 填充cookies
-  chrome.storage.local.get((data: Settings) => {
+// 填充cookies
+chrome.storage.local.get((data: Settings) => {
+  console.log('填充cookies')
+  if (data) {
     forEach(data.domains, (domain: Domain) => {
       if (domain.cookies.selected) {
         const cookies = domain.cookies.cookies[domain.cookies.selected]
         if (!isEmpty(cookies)) fillCookies(cookies)
       }
     })
-  })
+  }
 })
 
 // 监听消息事件功能需要在background.js每次被唤醒后都执行，所以不能放去onInstalled
