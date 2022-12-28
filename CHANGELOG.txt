@@ -1,5 +1,2 @@
-v0.9.4
-
-用content-script注册页面的mousedown事件来刷新菜单
-
-域名编辑器的Cookies方案的显示布局改回v0.8时的布局
+v0.9.5
+取消使用runtime.onInstalled事件作为填充Cookies的时机
