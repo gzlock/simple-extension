@@ -1,8 +1,6 @@
 name: crx builder
 
 on:
-  watch:
-    types: [ started ]
   push:
     tags:
       - 'v*'
