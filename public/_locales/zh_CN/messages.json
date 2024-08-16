@@ -101,6 +101,9 @@
   "save_but_empty": {
     "message": "保存(%s没有Cookies)"
   },
+  "alert_cookies_empty": {
+    "message": "保存失败，因为该网页没有Cookies"
+  },
   "switch": {
     "message": "切换"
   },
@@ -111,7 +114,7 @@
     "message": "输入搜索内容"
   },
   "cookies_content": {
-    "message": "%s 的内容"
+    "message": "%s 包含以下Cookies(有时候带有第三方域名的Cookies是正常的)"
   },
   "privacy_policy": {
     "message": "简易扩展的隐私政策说明"

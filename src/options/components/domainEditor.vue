@@ -49,6 +49,7 @@
 
         <el-table :data="domains[domain].cookies.cookies[selectedName]" border>
           <el-table-column :label="ui.name" prop="name"/>
+          <el-table-column :label="ui.domain" prop="domain"/>
           <el-table-column :label="ui.value" prop="value"/>
         </el-table>
       </div>
@@ -58,64 +59,66 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'vuex'
-import { Domain } from '../../utils/domain'
+import {mapActions, mapState} from 'vuex';
+import {Domain} from '../../utils/domain';
 
 export default {
   props: ['domain', 'data'],
-  data () {
+  data() {
     return {
       tab: 0,
-      selectedName: null,
-    }
+      selectedName: '',
+    };
   },
   methods: {
     ...mapActions(['save']),
-    async remove (index: number) {
-      return this.removeFromName(this.names[index])
+    async remove(index: number) {
+      return this.removeFromName(this.names[index]);
     },
-    async removeFromName (name: string) {
-      if (!confirm(this.ui.remove_cookies.replace('%s', name))) return
-      const domain: Domain = this.domains[this.domain]
+    async removeFromName(name: string) {
+      if (!confirm(this.ui.remove_cookies.replace('%s', name))) return;
+      const domain: Domain = this.domains[this.domain];
       if (domain.cookies.selected == name)
-        domain.cookies.selected = undefined
-      delete domain.cookies.cookies[name]
-      await this.save()
-      this.tab = 0
-      chrome.runtime.sendMessage('update')
+        domain.cookies.selected = undefined;
+      delete domain.cookies.cookies[name];
+      await this.save();
+      this.tab = 0;
+      chrome.runtime.sendMessage('update');
     },
-    async useCookie (name: string) {
-      this.domains[this.domain].useCookie(name, this.domains[this.domain].cookies.cookies[name])
-      await this.save()
-      chrome.runtime.sendMessage('update')
+    async useCookie(name: string) {
+      this.domains[this.domain].useCookie(name, this.domains[this.domain].cookies.cookies[name]);
+      await this.save();
+      chrome.runtime.sendMessage('update');
     },
-    isSelected (name: string): boolean {
-      return this.domains[this.domain].cookies.selected == name
+    isSelected(name: string): boolean {
+      return this.domains[this.domain].cookies.selected == name;
     },
-    async clearUA () {
-      delete this.domains[this.domain].ua
-      await this.save()
-      chrome.runtime.sendMessage('update')
+    async clearUA() {
+      delete this.domains[this.domain].ua;
+      await this.save();
+      chrome.runtime.sendMessage('update');
     },
-    tagEffect (name: string): string {
-      if (this.isSelected(name)) return 'dark'
-      if (this.selectedName == name) return 'light'
-      return 'plain'
+    tagEffect(name: string): string {
+      if (this.isSelected(name)) return 'dark';
+      if (this.selectedName == name) return 'light';
+      return 'plain';
     },
-    tagType (name: string): string | null {
-      if (this.isSelected(name)) return 'success'
-      if (this.selectedName == name) return null
-      return 'info'
+    tagType(name: string): string | null {
+      if (this.isSelected(name)) return 'success';
+      if (this.selectedName == name) return null;
+      return 'info';
     },
   },
   computed: {
     ...mapState(['domains', 'ui']),
-    names (): string[] {return Object.keys(this.domains[this.domain].cookies.cookies)},
-    hadUA (): boolean {
-      return this.domains[this.domain].ua && this.domains[this.domain].ua.value
+    names(): string[] {
+      return Object.keys(this.domains[this.domain].cookies.cookies);
+    },
+    hadUA(): boolean {
+      return this.domains[this.domain].ua && this.domains[this.domain].ua.value;
     },
   },
-}
+};
 </script>
 
 <style scoped>

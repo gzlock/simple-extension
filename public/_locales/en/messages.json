@@ -3,7 +3,7 @@
     "message": "Simple Extension"
   },
   "extensionDesc": {
-    "message": "Let each website can save/switch cookies, switch User-Agent"
+    "message": "Empower each website to save and switch Cookies, and easily change User-Agent."
   },
   "add": {
     "message": "Add"
@@ -101,6 +101,9 @@
   "save_but_empty": {
     "message": "Save(but %s no cookies)"
   },
+  "alert_cookies_empty": {
+    "message": "Failed to save because this webpage does not have cookies."
+  },
   "switch": {
     "message": "Switch"
   },
@@ -111,7 +114,7 @@
     "message": "Input keyword"
   },
   "cookies_content": {
-    "message": "%s content"
+    "message": "%s contains the following cookies (sometimes cookies with third-party domains are normal):"
   },
   "privacy_policy": {
     "message": "Simple Extension's Privacy Policy(Chinese)"

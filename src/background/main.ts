@@ -24,10 +24,10 @@ chrome.storage.local.get((data: Settings) => {
 chrome.runtime.onMessage.addListener(
   async (msg: any, sender, sendResponse) => {
     console.log('background.js', 'chrome.runtime.onMessage', msg)
-    if (msg == 'update') {
+    if (msg === 'update') {
       await rules.update()
       await menu.loadData()
-    } else if (msg == 'contextmenu') {
+    } else if (msg === 'contextmenu') {
       await menu.updateMenu(sender.tab!)
     }
     sendResponse('ok')
