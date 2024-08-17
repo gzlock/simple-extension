@@ -1,2 +1,6 @@
+v1.0.1
+修复网页内获取第三方域名Cookies的问题
+修复无Cookies的网页在保存Cookies的提示内容
+
 v0.9.5
 取消使用runtime.onInstalled事件作为填充Cookies的时机
