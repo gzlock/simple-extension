@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "incremental": true,
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "~/*": [
+        "./*"
+      ],
+      "src/*": [
+        "./src/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
+    },
+    "types": [
+      "node",
+      "unplugin-icons/types/vue",
+      "chrome-types",
+      "@intlify/unplugin-vue-i18n/messages"
+    ]
+  },
+  "include": [
+    "package.json",
+    "vite.config.ts",
+    "vite.firefox.config.ts",
+    "manifest.config.ts",
+    "manifest.firefox.config.ts"
+  ]
+}

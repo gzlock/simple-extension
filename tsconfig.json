@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "target": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "types": [
+      "chrome-types",
+      "unplugin-icons/types/vue",
+      "@intlify/unplugin-vue-i18n/messages"
+    ],
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "~/*": [
+        "./*"
+      ],
+      "src/*": [
+        "./src/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
+    }
+  },
+  "include": [
+    "package.json",
+    "vite.config.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ]
+}
