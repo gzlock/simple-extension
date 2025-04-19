@@ -47,7 +47,7 @@ export default {
   // side_panel: {
   //   default_path: "src/ui/side-panel/index.html",
   // },
-  devtools_page: "src/devtools/index.html",
+  // devtools_page: "src/devtools/index.html",
   options_page: "src/ui/options-page/index.html",
   offline_enabled: true,
   host_permissions: [
@@ -66,7 +66,7 @@ export default {
   web_accessible_resources: [
     {
       resources: [
-        "src/ui/devtools-panel/index.html",
+        // "src/ui/devtools-panel/index.html",
       ],
       matches: ["<all_urls>"],
     },
