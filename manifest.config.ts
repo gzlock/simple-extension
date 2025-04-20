@@ -16,7 +16,7 @@ export default {
   // name: env.mode === "staging" ? `[INTERNAL] ${name}` : displayName || name,
   name: "__MSG_extensionName__",
   description: "__MSG_extensionDesc__",
-  // incognito: "split",
+  incognito: "split",
   default_locale: "en",
   // up to four numbers separated by dots
   version: `${major}.${minor}.${patch}`,
@@ -61,7 +61,7 @@ export default {
     "cookies",
     "storage",
     "scripting",
-    "declarativeNetRequest",
+    // "declarativeNetRequest",
   ],
   web_accessible_resources: [
     {

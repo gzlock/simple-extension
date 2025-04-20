@@ -6,11 +6,10 @@ import { forEach } from "lodash-es"
 import { loadData, saveData } from "src/utils/data"
 import { Domain } from "../utils/domain"
 import { ContextMenu } from "./contextMenu"
-import { Rules } from "./rules"
+import { fillCookies } from "./fillCookies"
 
 let settings: Settings
-let rules: Rules = new Rules()
-let menu: ContextMenu = new ContextMenu(rules)
+let menu: ContextMenu = new ContextMenu()
 menu.onChanged = onSettingsChanged
 
 chrome.runtime.onInstalled.addListener(async (opt) => {
@@ -41,9 +40,7 @@ chrome.runtime.onInstalled.addListener(async (opt) => {
 chrome.runtime.onMessage.addListener(
   (msg: BgMsgOptions, sender: chrome.runtime.MessageSender, sendResponse: any) => {
     // console.log("background script", "chrome.runtime.onMessage", msg)
-    if (msg.action === "update") {
-      rules.update(settings)
-    } else if (msg.action === "updateContextMenu") {
+    if (msg.action === "updateContextMenu") {
       msg.tab = sender.tab
       menu.updateMenu(msg)
     } else if (msg.action == 'loadSettings') {
@@ -93,13 +90,14 @@ self.onerror = function (message, source, lineno, colno, error) {
 async function update(): Promise<void> {
   settings = await loadData()
   menu.settings = settings
-  await rules.update(settings)
+  for (const host in settings.domains) {
+    await fillCookies(settings.domains[host])
+  }
 }
 
 async function onSettingsChanged(notifyOptionsPage = true) {
   // console.log("background.ts", "settings changed", settings)
   saveData(settings)
-  await rules.update(settings)
   if (notifyOptionsPage)
     chrome.runtime.sendMessage({ action: "settingsChanged", settings })
 }

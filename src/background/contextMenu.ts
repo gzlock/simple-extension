@@ -2,7 +2,6 @@ import { forEach, isEmpty } from "lodash-es"
 import randomString from "src/utils/randomString"
 import { UA } from "src/utils/ua"
 import { ui } from "src/utils/ui"
-import { Rules } from "./rules"
 import sleep from "src/utils/sleep"
 
 const urlPattern: string[] = ["http://*/*", "https://*/*"]
@@ -10,14 +9,12 @@ const urlPattern: string[] = ["http://*/*", "https://*/*"]
 export class ContextMenu {
   public settings?: Settings
   public tab?: chrome.tabs.Tab
-  private readonly rules: Rules
   private rootMenuId?: string
   private menus: { [key: string]: Menu } = {}
   public onChanged?: () => void
 
 
-  constructor(rules: Rules) {
-    this.rules = rules
+  constructor() {
     chrome.contextMenus.onClicked.addListener(this.onClickListener.bind(this))
     chrome.tabs.onUpdated.addListener(this.clear.bind(this))
     chrome.tabs.onRemoved.addListener(this.clear.bind(this))
