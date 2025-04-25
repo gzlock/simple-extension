@@ -8,19 +8,19 @@
             </div>
         </el-alert>
         <el-table :data="names" stripe style="width: 100%" table-layout="auto" :empty-text="ui.empty">
-            <el-table-column label="名称" width="180">
+            <el-table-column :label="ui.name" width="180">
                 <template #default="scope">
                     <el-input :value="scope.row" @blur="event => modifyName(name, event.target.value)" />
                 </template>
             </el-table-column>
-            <el-table-column label="值">
+            <el-table-column :label="ui.value">
                 <template #default="scope">
                     <el-input v-model="customUA[scope.row]" @blur="modifyValue(name)" />
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column :label="ui.action">
                 <template #default="scope">
-                    <el-button type="danger" size="small" @click="remove(scope.row)">删除</el-button>
+                    <el-button type="danger" size="small" @click="remove(scope.row)">{{ ui.delete }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -43,9 +43,7 @@ export default {
     methods: {
         async add() {
             if (isEmpty(this.form.name))
-                return alert('名称不能为空')
-            if (isEmpty(this.form.value))
-                return alert('值不能为空')
+                return alert(ui.alert_title_not_empty)
             this.customUA[this.form.name] = this.form.value
             this.form.name = ''
             this.form.value = ''
@@ -64,7 +62,7 @@ export default {
         },
         async modifyName(oldName: string, newName: string) {
             if (isEmpty(newName))
-                return alert('名称不能为空')
+                return alert(ui.alert_title_not_empty)
             this.customUA[newName] = this.customUA[oldName]
             delete this.customUA[oldName]
             /// 更改在使用的名称

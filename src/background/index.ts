@@ -2,14 +2,16 @@
 // import { extPay } from 'src/utils/payment/extPay'
 // extPay.startBackground()
 
-import { forEach } from "lodash-es"
+import { forEach, isArray } from "lodash-es"
 import { loadData, saveData } from "src/utils/data"
 import { Domain } from "../utils/domain"
 import { ContextMenu } from "./contextMenu"
-import { fillCookies } from "./fillCookies"
+import { Rules } from "./rules"
+import { fillCookies } from "../utils/cookies"
 
 let settings: Settings
-let menu: ContextMenu = new ContextMenu()
+const rules: Rules = new Rules()
+const menu: ContextMenu = new ContextMenu()
 menu.onChanged = onSettingsChanged
 
 chrome.runtime.onInstalled.addListener(async (opt) => {
@@ -38,14 +40,18 @@ chrome.runtime.onInstalled.addListener(async (opt) => {
 
 // message listener
 chrome.runtime.onMessage.addListener(
-  (msg: BgMsgOptions, sender: chrome.runtime.MessageSender, sendResponse: any) => {
+  (
+    msg: BgMsgOptions,
+    sender: chrome.runtime.MessageSender,
+    sendResponse: any,
+  ) => {
     // console.log("background script", "chrome.runtime.onMessage", msg)
     if (msg.action === "updateContextMenu") {
       msg.tab = sender.tab
       menu.updateMenu(msg)
-    } else if (msg.action == 'loadSettings') {
+    } else if (msg.action == "loadSettings") {
       return sendResponse(settings)
-    } else if (msg.action == 'setSettings') {
+    } else if (msg.action == "setSettings") {
       /// from options page
       /// all json
       /// need to convert to the Domain class
@@ -67,11 +73,11 @@ chrome.runtime.onMessage.addListener(
 
 // 扩展图标的点击行为
 chrome.action.onClicked.addListener(async (tab) => {
-  let hash = ''
-  if (tab.url?.startsWith('http')) {
+  let hash = ""
+  if (tab.url?.startsWith("http")) {
     hash = `#${new URL(tab.url).hostname}`
   }
-  const url = chrome.runtime.getURL('src/ui/options-page/index.html')
+  const url = chrome.runtime.getURL("src/ui/options-page/index.html")
   // console.log('打开', url + domain)
   await chrome.tabs.create({ url: `${url}${hash}` })
 })
@@ -86,23 +92,37 @@ self.onerror = function (message, source, lineno, colno, error) {
 
 // console.info("hello world from background")
 
-
-async function update(): Promise<void> {
-  settings = await loadData()
-  menu.settings = settings
-  for (const host in settings.domains) {
-    await fillCookies(settings.domains[host])
-  }
-}
-
 async function onSettingsChanged(notifyOptionsPage = true) {
   // console.log("background.ts", "settings changed", settings)
-  saveData(settings)
+  await Promise.all([
+    saveData(settings),
+    rules.update(settings),
+    updateCookies(),
+  ])
   if (notifyOptionsPage)
     chrome.runtime.sendMessage({ action: "settingsChanged", settings })
 }
 
-update()
+async function updateCookies() {
+  const promises = Object.keys(settings.domains).map(async (host) => {
+    const domain = settings.domains[host]
+    if (domain && domain.cookies.selected) {
+      const cookies = domain.cookies.cookies[domain.cookies.selected!]
+      if (isArray(cookies)) {
+        await fillCookies(cookies)
+      }
+    }
+  })
+  await Promise.all(promises)
+}
 
-export { }
+async function init(): Promise<void> {
+  settings = await loadData()
+  menu.settings = settings
+  await rules.update(settings)
+  await updateCookies()
+}
 
+init()
+
+export {}

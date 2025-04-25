@@ -376,6 +376,7 @@
     "randomString": true,
     "sleep": true,
     "ui": true,
-    "UA": true
+    "UA": true,
+    "clearTabCookies": true
   }
 }

@@ -34,10 +34,12 @@
                 <el-alert :closable="false">
                     <el-space :size="20">
                         <span>{{ ui.cookies_action }}</span>
-                        <el-button size="small" type="primary" @click="useCookie(selectedName)">
+                        <el-button size="small" type="primary" @click="useCookie(selectedName)"
+                            :disabled="isSelected(selectedName)">
                             {{ isSelected(selectedName) ? ui.used : ui.use }}
                         </el-button>
-                        <el-button type="danger" size="small" @click="removeFromName(selectedName)">删除</el-button>
+                        <el-button type="danger" size="small" @click="removeFromName(selectedName)">{{ ui.delete
+                        }}</el-button>
                     </el-space>
                 </el-alert>
 
@@ -95,8 +97,9 @@ export default {
             this.tab = 0;
         },
         async useCookie(name: string) {
-            console.log('useCookie', this.domains[this.domain]);
-            this.domains[this.domain].useCookie(name, this.domains[this.domain].cookies.cookies[name]);
+            const domain = this.domains[this.domain];
+            if (domain.cookies.selected == name) return;
+            domain.useCookie(name, domain.cookies.cookies[name]);
             this.save();
             // chrome.runtime.sendMessage('update');
         },

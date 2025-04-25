@@ -6,6 +6,7 @@ export const ui = {
   prompt_save_cookies: chrome.i18n.getMessage('prompt_save_cookies'),
   remove_domain: chrome.i18n.getMessage('remove_domain'),
   remove_cookies: chrome.i18n.getMessage('remove_cookies'),
+  delete: chrome.i18n.getMessage('delete'),
   name: chrome.i18n.getMessage('name'),
   value: chrome.i18n.getMessage('value'),
   action: chrome.i18n.getMessage('action'),
@@ -42,5 +43,9 @@ export const ui = {
   alert_cookies_empty: chrome.i18n.getMessage('alert_cookies_empty'),
   confirm_reset_ua: chrome.i18n.getMessage('confirm_reset_ua'),
   confirm_delete_custom_ua: chrome.i18n.getMessage('confirm_delete_custom_ua'),
-  tab_title_custom_ua: chrome.i18n.getMessage('tab_title_custom_ua')
+  tab_title_custom_ua: chrome.i18n.getMessage('tab_title_custom_ua'),
+  alert_title_not_empty: chrome.i18n.getMessage('alert_title_not_empty'),
+  alert_value_not_empty: chrome.i18n.getMessage('alert_value_not_empty'),
+  menu_clear_domain_cookies: chrome.i18n.getMessage('menu_clear_domain_cookies'),
+  confirm_clear_domain_cookies: chrome.i18n.getMessage('confirm_clear_domain_cookies')
 }

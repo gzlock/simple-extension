@@ -9,8 +9,6 @@ import Components from "unplugin-vue-components/vite"
 import Icons from "unplugin-icons/vite"
 import IconsResolver from "unplugin-icons/resolver"
 import TurboConsole from "unplugin-turbo-console/vite"
-import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite"
-import tailwindcss from "@tailwindcss/vite"
 import "dotenv/config"
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import ElementPlus from 'unplugin-element-plus/vite'
@@ -100,8 +98,6 @@ export default defineConfig({
     }),
 
     vue(),
-
-    tailwindcss(),
 
     TurboConsole(),
 

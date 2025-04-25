@@ -61,7 +61,7 @@ export default {
     "cookies",
     "storage",
     "scripting",
-    // "declarativeNetRequest",
+    "declarativeNetRequest",
   ],
   web_accessible_resources: [
     {

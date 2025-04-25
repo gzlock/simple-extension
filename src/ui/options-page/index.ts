@@ -27,10 +27,11 @@ const settings = ref<Settings>()
 
 
 chrome.runtime.sendMessage({ action: "loadSettings" }).then((response) => {
-  console.log('options-page', response)
-  settings.value = response
-  app.provide('settings', { settings, updateSettings })
-  app.mount("#app")
+  loadData().then((data) => {
+    settings.value = data
+    app.provide('settings', { settings, updateSettings })
+    app.mount("#app")
+  })
 })
 
 function updateSettings() {
@@ -41,7 +42,9 @@ function updateSettings() {
 
 chrome.runtime.onMessage.addListener((msg: any, sender: chrome.runtime.MessageSender, sendResponse: any) => {
   if (msg.action === "settingsChanged") {
-    settings.value = msg.settings
+    loadData().then((data) => {
+      settings.value = data
+    })
   }
   sendResponse('ok')
   return true

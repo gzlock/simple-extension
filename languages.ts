@@ -18,6 +18,7 @@ const languages: { [key: string]: string[] } = {
   ],
   "remove_domain": ["Remove [%s] domain data?", "删除[%s]域名数据?"],
   "remove_cookies": ["Remove %s ?", "删除 %s ?"],
+  "delete": ["Delete", "删除"],
   "name": ["Name", "名称"],
   "value": ["Value", "值"],
   "action": ["Action", "操作"],
@@ -78,7 +79,23 @@ const languages: { [key: string]: string[] } = {
   "tab_title_custom_ua": [
     'Custom User-Agent',
     '自定义User-Agent'
-  ]
+  ],
+  "alert_title_not_empty": [
+    "The name cannot be empty",
+    "名称不能为空"
+  ],
+  "alert_value_not_empty": [
+    "The value cannot be empty",
+    "值不能为空"
+  ],
+  "menu_clear_domain_cookies": [
+    "Clear Cookies",
+    "清除Cookies",
+  ],
+  "confirm_clear_domain_cookies": [
+    "Are you sure you want to clear all cookies of current domain?\nIt will not affect the saved Cookies.",
+    "确定清除当前域名的所有Cookies？\n不会影响已经保存的Cookies。",
+  ],
 }
 
 const dir: string[] = [
