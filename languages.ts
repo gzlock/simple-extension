@@ -92,10 +92,22 @@ const languages: { [key: string]: string[] } = {
     "Clear Cookies",
     "清除Cookies",
   ],
+  "modify": [
+    "Modify",
+    "修改",
+  ],
+  "dialog_modify_ua_title": [
+    "Modify User-Agent",
+    "修改User-Agent",
+  ],
   "confirm_clear_domain_cookies": [
     "Are you sure you want to clear all cookies of current domain?\nIt will not affect the saved Cookies.",
     "确定清除当前域名的所有Cookies？\n不会影响已经保存的Cookies。",
   ],
+  "confirm_duplicate_and_cover": [
+    "User-Agent name already exists, overwrite it?",
+    "User-Agent名称已经存在，点击确定将会覆盖",
+  ]
 }
 
 const dir: string[] = [

@@ -1,7 +1,7 @@
 {
   "name": "simple-extension",
   "displayName": "Simple Extension",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "private": true,
   "repository": {
     "type": "git",

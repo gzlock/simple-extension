@@ -47,5 +47,8 @@ export const ui = {
   alert_title_not_empty: chrome.i18n.getMessage('alert_title_not_empty'),
   alert_value_not_empty: chrome.i18n.getMessage('alert_value_not_empty'),
   menu_clear_domain_cookies: chrome.i18n.getMessage('menu_clear_domain_cookies'),
-  confirm_clear_domain_cookies: chrome.i18n.getMessage('confirm_clear_domain_cookies')
+  modify: chrome.i18n.getMessage('modify'),
+  dialog_modify_ua_title: chrome.i18n.getMessage('dialog_modify_ua_title'),
+  confirm_clear_domain_cookies: chrome.i18n.getMessage('confirm_clear_domain_cookies'),
+  confirm_duplicate_and_cover: chrome.i18n.getMessage('confirm_duplicate_and_cover')
 }
