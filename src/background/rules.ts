@@ -1,7 +1,9 @@
 import { forEach } from "lodash-es"
 import { Domain } from "../utils/domain"
 
-// 网络规则
+/**
+ *  User-Agent 规则
+*/
 export class Rules {
 
   async update(settings: Settings) {
@@ -36,6 +38,6 @@ export class Rules {
     // 删除旧规则
     // await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds })
     // 添加新的规则
-    await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds,addRules })
+    await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds, addRules })
   }
 }

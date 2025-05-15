@@ -14,6 +14,11 @@ const rules: Rules = new Rules()
 const menu: ContextMenu = new ContextMenu()
 menu.onChanged = onSettingsChanged
 
+chrome.runtime.onStartup.addListener(async () => {
+  console.log("background script", "chrome.runtime.onStartup")
+  await init()
+})
+
 chrome.runtime.onInstalled.addListener(async (opt) => {
   // Check if reason is install or update. Eg: opt.reason === 'install' // If extension is installed.
   // opt.reason === 'update' // If extension is updated.

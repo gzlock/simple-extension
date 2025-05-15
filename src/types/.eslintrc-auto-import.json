@@ -377,6 +377,8 @@
     "sleep": true,
     "ui": true,
     "UA": true,
-    "clearTabCookies": true
+    "clearTabCookies": true,
+    "Slot": true,
+    "Slots": true
   }
 }
