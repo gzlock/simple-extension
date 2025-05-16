@@ -1,8 +1,8 @@
 name: build
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*.*.*'
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
