@@ -1,9 +1,6 @@
 name: build
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: push
 
 jobs:
   build_and_deploy:
@@ -26,5 +23,6 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
         with:
           files: dist/chrome-${{ github.ref_name }}.zip
