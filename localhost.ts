@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.180.0/http/server.ts" // 确保使用适合你 Deno 版本的 std 库
 
-console.log("HTTP server running on http://localhost:80/")
+console.info("HTTP server running on http://localhost:80/")
 
 serve(
   async (req: Request) => {

@@ -18,7 +18,7 @@ export class Domain {
   }
 
   useUA(selected?: string, value?: string) {
-    console.log('设置ua', selected, value);
+    console.info('设置ua', selected, value);
 
     if (!selected || !value) {
       this.ua = undefined

@@ -3,8 +3,7 @@ import { forEach } from "lodash-es"
 
 export async function loadData(): Promise<Settings> {
 
-  // @ts-ignore
-  const data: Settings = await chrome.storage.local.get()
+  const data: Settings = await chrome.storage.local.get() as Settings
 
   const domains: Domains = {}
   if (data) {
@@ -25,7 +24,7 @@ export async function saveData({
                                  domains,
                                }: Settings) {
   domains = JSON.parse(JSON.stringify(domains))
-  const _domains: any = {}
+  const _domains: Domains = {}
   Object.keys(domains).forEach(domain => {
     _domains[domain] = domains[domain]
   })

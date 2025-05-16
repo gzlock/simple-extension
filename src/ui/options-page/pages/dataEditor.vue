@@ -1,15 +1,26 @@
 <template>
-    <div class="ui form">
-        <el-input type="textarea" v-model="json" :autosize="{ minRows: 5, maxRows: 20 }" resize="none" />
-        <el-alert :closable="false">
-            <el-button type="primary" @click="saveData">{{ ui.import }}</el-button>
-        </el-alert>
-    </div>
+  <div class="ui form">
+    <el-input
+      v-model="json"
+      type="textarea"
+      :autosize="{ minRows: 5, maxRows: 20 }"
+      resize="none"
+    />
+    <el-alert :closable="false">
+      <el-button
+        type="primary"
+        @click="saveData"
+      >
+        {{ ui.import }}
+      </el-button>
+    </el-alert>
+  </div>
 </template>
 
 <script lang="ts">
 import { ElMessage } from 'element-plus'
 import { pick } from 'lodash-es'
+import { Settings } from "@/src/types"
 
 export default {
     setup() {

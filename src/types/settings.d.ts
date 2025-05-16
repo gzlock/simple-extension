@@ -1,14 +1,15 @@
+import * as types from '../types';
+
 export { }
 
 declare global {
 
-  type Domains = { [domain: string]: Domain }
+  type Domains = types.Domains
 
-  interface Settings {
-    config: { version: string }
-    domains: Domains
-    customUA: { [name: string]: string }
-  }
+  type Settings = types.Settings
+
+  type DomainUA = types.DomainUA
+
 
   interface Menu {
     title?: string
@@ -23,17 +24,8 @@ declare global {
     click?: (info: ContextMenus.OnClickData, tab?: chrome.tabs.Tab) => void
   }
 
-  interface DomainUA {
-    selected: string,
-    value: string
-  }
-
-  type Cookies = chrome.cookies.Cookie[]
-
-  interface DomainCookies {
-    cookies: { [name: string]: Cookies }
-    selected?: string
-  }
+  type Cookies = types.Cookies
+  type DomainCookies = types.DomainCookies
 
   interface BgMsgOptions {
     action: "update" | "updateContextMenu" | "loadSettings" | "setSettings" | "settingsChanged",

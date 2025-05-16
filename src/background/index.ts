@@ -15,7 +15,7 @@ const menu: ContextMenu = new ContextMenu()
 menu.onChanged = onSettingsChanged
 
 chrome.runtime.onStartup.addListener(async () => {
-  console.log("background script", "chrome.runtime.onStartup")
+  console.info("background script", "chrome.runtime.onStartup")
   await init()
 })
 

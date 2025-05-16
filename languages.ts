@@ -116,7 +116,7 @@ const dir: string[] = [
   "dist/firefox/_locales",
 ]
 
-//@ts-ignore
+//@ts-expect-error: for bun js code
 const currentDir: string = import.meta.dirname
 
 async function create(language: "en" | "zh_CN") {
@@ -127,7 +127,7 @@ async function create(language: "en" | "zh_CN") {
     data[key] = { message: languages[key][index] || languages[key][0] }
     importText.push(`${key}: chrome.i18n.getMessage('${key}')`)
   })
-  console.log("dir", dir)
+  // console.log("dir", dir)
   for (let i = 0; i < dir.length; i++) {
     const folder = path.join(currentDir, dir[i], language)
     // console.log("创建文件夹", folder)

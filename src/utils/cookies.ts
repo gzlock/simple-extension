@@ -44,7 +44,7 @@ export async function getCookies2(tabId: number): Promise<Cookies> {
     uniqOrigins.map((origin) => chrome.cookies.getAll({ url: origin })),
   ).then((results) => {
     for (const _cookies of results) {
-      for (let cookie of _cookies) {
+      for (const cookie of _cookies) {
         const _pick = pick(cookie, [
           "domain",
           "name",

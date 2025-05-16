@@ -35,7 +35,7 @@ chrome.runtime.sendMessage({ action: "loadSettings" }).then((response) => {
 })
 
 function updateSettings() {
-  console.log('选项页面', '保存settings', settings.value);
+  console.info('选项页面', '保存settings', settings.value);
 
   chrome.runtime.sendMessage({ action: "setSettings", settings: settings.value })
 }
