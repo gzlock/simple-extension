@@ -1,8 +1,10 @@
 name: build
+
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -22,8 +24,8 @@ jobs:
       - run: pnpm lint
       - run: pnpm build
 
-      - name: upload dist/chrome-{tag}.zip to Release
+      - name: Upload dist/chrome-{tag}.zip to Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+        if: github.ref_type == 'tag'
         with:
           files: dist/chrome-${{ github.ref_name }}.zip
