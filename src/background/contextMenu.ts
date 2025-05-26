@@ -14,13 +14,28 @@ export class ContextMenu {
   private menus: { [key: string]: Menu } = {}
   public onChanged?: () => void
 
-  constructor() {
+  /**
+   * 添加Listener
+   */
+  addListeners() {
     chrome.contextMenus.onClicked.addListener(this.onClickListener.bind(this))
     chrome.tabs.onUpdated.addListener(this.clear.bind(this))
     chrome.tabs.onRemoved.addListener(this.clear.bind(this))
     chrome.tabs.onActivated.addListener(this.clear.bind(this))
     chrome.windows.onFocusChanged.addListener(this.clear.bind(this))
   }
+
+  /**
+   * 清理上面添加的Listener
+   */
+  removeListeners() {
+    chrome.contextMenus.onClicked.removeListener(this.onClickListener.bind(this))
+    chrome.tabs.onUpdated.removeListener(this.clear.bind(this))
+    chrome.tabs.onRemoved.removeListener(this.clear.bind(this))
+    chrome.tabs.onActivated.removeListener(this.clear.bind(this))
+    chrome.windows.onFocusChanged.removeListener(this.clear.bind(this))
+  }
+
 
   /**
    * 点击菜单

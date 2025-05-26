@@ -13,7 +13,7 @@
 //   document.body?.append(iframe)
 // }
 
-self.onerror = function(message, source, lineno, colno, error) {
+self.onerror = function (message, source, lineno, colno, error) {
   console.info("Error: " + message)
   console.info("Source: " + source)
   console.info("Line: " + lineno)
@@ -29,12 +29,20 @@ document.addEventListener("mousedown", (e: MouseEvent) => {
     const msg: BgMsgOptions = { action: "updateContextMenu", url: window.location.href }
     if (e.target instanceof Element && e.target.tagName.toLowerCase() === "img") {
       const img = e.target as HTMLImageElement
-      if (img.complete
-        && img.naturalWidth === 0
-      ) {
-        msg.imgUrl = img.src
+      if (img.complete && img.naturalWidth === 0) {
+        if (img.src.startsWith("http")) {
+          msg.imgUrl = img.src
+        }
       }
     }
-    chrome.runtime.sendMessage(msg)
+    try {
+      if (chrome && chrome.runtime && chrome.runtime.sendMessage) {
+        chrome.runtime.sendMessage(msg)
+      } else {
+        console.warn("chrome.runtime.sendMessage is not available")
+      }
+    } catch (error) {
+      console.error("Error sending message to background script:", error)
+    }
   }
 })

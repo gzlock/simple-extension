@@ -9,6 +9,10 @@ import { ContextMenu } from "./contextMenu"
 import { Rules } from "./rules"
 import { fillCookies } from "../utils/cookies"
 
+
+
+export { }
+
 let settings: Settings
 const rules: Rules = new Rules()
 const menu: ContextMenu = new ContextMenu()
@@ -16,9 +20,11 @@ menu.onChanged = onSettingsChanged
 
 chrome.runtime.onStartup.addListener(async () => {
   console.info("background script", "chrome.runtime.onStartup")
+  addListener()
   await init()
 })
 
+// unused
 chrome.runtime.onInstalled.addListener(async (opt) => {
   // Check if reason is install or update. Eg: opt.reason === 'install' // If extension is installed.
   // opt.reason === 'update' // If extension is updated.
@@ -43,49 +49,6 @@ chrome.runtime.onInstalled.addListener(async (opt) => {
   }
 })
 
-// message listener
-chrome.runtime.onMessage.addListener(
-  (
-    msg: BgMsgOptions,
-    sender: chrome.runtime.MessageSender,
-    sendResponse: any,
-  ) => {
-    // console.log("background script", "chrome.runtime.onMessage", msg)
-    if (msg.action === "updateContextMenu") {
-      msg.tab = sender.tab
-      menu.updateMenu(msg)
-    } else if (msg.action == "loadSettings") {
-      return sendResponse(settings)
-    } else if (msg.action == "setSettings") {
-      /// from options page
-      /// all json
-      /// need to convert to the Domain class
-      const newSettings = msg.settings!
-      const { config, customUA } = newSettings
-      const domains: Domains = {}
-
-      forEach(newSettings.domains, (data: any, domain: string) => {
-        domains[domain] = Domain.fromJSON(data)
-      })
-      Object.assign(settings, { domains, config, customUA })
-      menu.settings = settings
-      onSettingsChanged(false)
-    }
-    sendResponse("ok")
-    return true
-  },
-)
-
-// 扩展图标的点击行为
-chrome.action.onClicked.addListener(async (tab) => {
-  let hash = ""
-  if (tab.url?.startsWith("http")) {
-    hash = `#${new URL(tab.url).hostname}`
-  }
-  const url = chrome.runtime.getURL("src/ui/options-page/index.html")
-  // console.log('打开', url + domain)
-  await chrome.tabs.create({ url: `${url}${hash}` })
-})
 
 self.onerror = function (message, source, lineno, colno, error) {
   console.info("Error: " + message)
@@ -128,6 +91,63 @@ async function init(): Promise<void> {
   await updateCookies()
 }
 
-init()
+async function addListener() {
+  chrome.runtime.onMessage.removeListener(onMessageListener)
+  chrome.action.onClicked.removeListener(onClickedListener)
 
-export {}
+  menu.removeListeners()
+
+  await sleep(10)
+  menu.addListeners()
+
+  // message listener
+  chrome.runtime.onMessage.addListener(onMessageListener)
+
+  // 扩展图标的点击行为
+  chrome.action.onClicked.addListener(onClickedListener)
+}
+
+
+function onMessageListener(
+  msg: BgMsgOptions,
+  sender: chrome.runtime.MessageSender,
+  sendResponse: any,
+) {
+  console.info("background script", "chrome.runtime.onMessage", msg)
+  if (msg.action === "updateContextMenu") {
+    msg.tab = sender.tab
+    menu.updateMenu(msg)
+  } else if (msg.action == "loadSettings") {
+    return sendResponse(settings)
+  } else if (msg.action == "setSettings") {
+    /// from options page
+    /// all json
+    /// need to convert to the Domain class
+    const newSettings = msg.settings!
+    const { config, customUA } = newSettings
+    const domains: Domains = {}
+
+    forEach(newSettings.domains, (data: any, domain: string) => {
+      domains[domain] = Domain.fromJSON(data)
+    })
+    Object.assign(settings, { domains, config, customUA })
+    menu.settings = settings
+    onSettingsChanged(false)
+  }
+  sendResponse("ok")
+  return true
+}
+
+async function onClickedListener(tab: chrome.tabs.Tab) {
+  let hash = ""
+  if (tab.url?.startsWith("http")) {
+    hash = `#${new URL(tab.url).hostname}`
+  }
+  const url = chrome.runtime.getURL("src/ui/options-page/index.html")
+  // console.log('打开', url + domain)
+  await chrome.tabs.create({ url: `${url}${hash}` })
+}
+
+
+addListener()
+init()
