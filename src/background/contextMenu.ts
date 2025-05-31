@@ -184,17 +184,21 @@ export class ContextMenu {
       {
         title: ui.menu_clear_domain_cookies,
         click: async (info, tab) => {
-          const results: any[] = await chrome.scripting.executeScript({
-            target: { tabId: tab!.id! },
-            func: function (str: string) {
-              return confirm(str.replace("%s", window.location.host))
-            },
-            args: [ui.confirm_clear_domain_cookies],
-          })
-          const isSure = results[0].result as boolean
-          if (isSure) {
-            await clearTabCookies(tab!)
-            chrome.tabs.reload(tab!.id)
+          try {
+            const results: any[] = await chrome.scripting.executeScript({
+              target: { tabId: tab!.id! },
+              func: function (str: string) {
+                return confirm(str.replace("%s", window.location.host))
+              },
+              args: [ui.confirm_clear_domain_cookies],
+            })
+            const isSure = results[0].result as boolean
+            if (isSure) {
+              await clearTabCookies(tab!)
+              chrome.tabs.reload(tab!.id)
+            }
+          } catch (e) {
+            console.error(e)
           }
         },
       },
