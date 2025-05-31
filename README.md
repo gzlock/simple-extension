@@ -1,6 +1,6 @@
 ![img](./src/assets/logo.png)
 
-# Simple Extension v1.0.0
+# Simple Extension v1.0.8
 
 基于Chrome Extension Manifest V3标准
 
