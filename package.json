@@ -26,7 +26,7 @@
     "create_languages": "deno run --allow-write=. languages.ts"
   },
   "dependencies": {
-    "element-plus": "^2.9.10",
+    "element-plus": "^2.11.0",
     "lodash-es": "^4.17.21",
     "marked": "^15.0.11",
     "notivue": "^2.4.5",
