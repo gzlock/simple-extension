@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "element-plus": "^2.9.10",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.18.1",
     "marked": "^15.0.11",
     "notivue": "^2.4.5",
     "pinia": "^3.0.2",
